@@ -1,37 +1,105 @@
-const fastify = require('fastify');
-// const User = require('./user.model');
-// const usersService = require('./user.service');
+const { getUsers, getUser, addUser, deleteUser, updateUser } = require("./user.controller");
 
-// fastify.route('/').get(async (req, res) => {
-//   const users = await usersService.getAll();
-//   // map user fields to exclude secret fields like "password"
-//   res.json(users.map(User.toResponse));
-// });
+const User = {
+  type: 'object',
+  properties: {
+    id: {type: 'string'},
+    name: {type: "string"},
+    login: {type: "string"}
+  }
+}
 
-
-fastify.route({
-  method: 'GET',
-  url: '/',
+const getUsersOpts = {
   schema: {
-    // request needs to have a querystring with a `name` parameter
-    querystring: {
-      name: { type: 'string' }
-    },
-    // the response needs to be an object with an `hello` property of type 'string'
-    response: {
+    response:{
       200: {
-        type: 'object',
-        properties: {
-          hello: { type: 'string' }
-        }
+        type: 'array',
+        items: User
       }
     }
   },
-  // this function is executed for every request before the handler is executed
-  preHandler: async () => {
-    // E.g. check authentication
-  },
-  handler: async () => ({ hello: 'world' })
-})
 
-// module.exports = router;
+  handler: getUsers
+}
+
+const getUserOpts = {
+  schema: {
+    response: {
+      200: User
+    }
+  },
+
+  handler: getUser
+}
+
+const postUserOpts = {
+  schema: {
+    body: {
+        type: 'object',
+        require: ["password", "login", "name"],
+        properties: {
+          name: {type: 'string'},
+          pasword: {type: 'string'},
+          login: {type: 'string'},
+        }
+    },
+    response: {
+      201: User 
+    }
+  },
+
+  handler: addUser
+}
+
+const updateUserOpts = {
+  schema: {
+    body: {
+      type: 'object',
+      properties: {
+        name: {type: 'string'},
+        pasword: {type: 'string'},
+        login: {type: 'string'},
+      }
+    },
+    response: {
+      200: User 
+    }
+  },
+
+  handler: updateUser
+}
+
+const deleteUserOpts = {
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: {type: "string"}
+        }
+      },
+      404: {
+        type: "object",
+        properties: {
+          message: {type: "string"}
+        }
+      }  
+    }
+  },
+
+  handler: deleteUser
+}
+
+function UserRoutes (fastify, options, done) {
+
+  fastify.get('/users', getUsersOpts);
+  fastify.get('/users/:id', getUserOpts);
+  fastify.post('/users', postUserOpts);
+  fastify.put('/users/:id', updateUserOpts);
+  fastify.delete('/users/:id', deleteUserOpts);
+
+  done()
+}
+
+
+module.exports = UserRoutes;

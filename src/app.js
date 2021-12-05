@@ -1,5 +1,14 @@
-const fastify = require('fastify')({ logger: true })
-const { PORT } = require('./common/config');
+const fastify = require('fastify')({ logger: true });
+
+fastify.register(require('fastify-swagger'), {
+  exposeRoute: true,
+  routePrefix: '/api-docs',
+  swagger: {
+    info: {title: 'REST API'}
+  }
+});
+fastify.register(require('./resources/users/user.router'));
+
 // const swaggerUI = require('swagger-ui-express');
 // const path = require('path');
 // const YAML = require('yamljs');
@@ -19,16 +28,4 @@ const { PORT } = require('./common/config');
 //   next();
 // });
 
-// app.use('/users', userRouter);
-// fastify.get('/', async () => ({ hello: 'world' }));
-
-const start = async () => {
-  try {
-    await fastify.listen(PORT);
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-};
-
-module.exports = start;
+module.exports = fastify;
