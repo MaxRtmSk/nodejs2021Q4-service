@@ -1,24 +1,34 @@
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
-const path = require('path');
-const YAML = require('yamljs');
-const userRouter = require('./resources/users/user.router');
+const fastify = require('fastify')({ logger: true })
+const { PORT } = require('./common/config');
+// const swaggerUI = require('swagger-ui-express');
+// const path = require('path');
+// const YAML = require('yamljs');
+// const userRouter = require('./resources/users/user.router');
 
-const app = express();
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+// const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-app.use(express.json());
+// app.use(express.json());
 
-app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+// app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.use('/', (req, res, next) => {
-  if (req.originalUrl === '/') {
-    res.send('Service is running!');
-    return;
+// app.use('/', (req, res, next) => {
+//   if (req.originalUrl === '/') {
+//     res.send('Service is running!');
+//     return;
+//   }
+//   next();
+// });
+
+// app.use('/users', userRouter);
+// fastify.get('/', async () => ({ hello: 'world' }));
+
+const start = async () => {
+  try {
+    await fastify.listen(PORT);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
   }
-  next();
-});
+};
 
-app.use('/users', userRouter);
-
-module.exports = app;
+module.exports = start;
