@@ -1,26 +1,27 @@
-const USERS = [];
+let USERS = [];
 
-const getAll = async () => USERS;
-const create = async (user) => USERS.push(user);
-const getById = async (id) => USERS.find((user) => user.id === id);
-const update = async (id, updateUser) => {
-  USERS.forEach((user, index) => {
-    if (user.id === id) {
-      USERS[index].name = updateUser.name;
-      USERS[index].login = updateUser.login;
-      USERS[index].password = updateUser.password;
-    }
-  });
+const getAll =  () => USERS;
+const getById =  (id) => USERS.find((user) => user.id === id);
+const create =  (user) => {
+  USERS = [...USERS, user];
+  const findUser = getById(user.id);
+  return findUser
 };
-// const remove = async(id) => {
+const update =  ({name, login, password}, id) => {
+  const findUser = USERS.find((user) => user.id === id);
   
-//   const removeIndex = await USERS.map((user) => user.id).indexOf(id);
-//   if (removeIndex === -1) {
-//     return false
-//   } 
-//   await tasksRepo.removeSeccessTasks(id)
-//   USERS.splice(removeIndex, 1);
-//   return true
-// };
+  if (name) 
+      findUser.name = name;
+  if (login) 
+      findUser.login = login; 
+  if (password) 
+      findUser.password = password;
 
-module.exports = { getAll, create, getById, update };
+  return findUser;
+};
+
+const remove = (id) => {
+  USERS = USERS.filter(user => user.id !== id);
+};
+
+module.exports = { getAll, create, getById, update, remove};

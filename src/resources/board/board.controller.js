@@ -48,7 +48,7 @@ const updateBoard = async (req, res) => {
 
 const deleteBoard = async (req, res) => {
     const {boardId} = req.params;
-    console.log('REMOVE ID', boardId, BOARDS)
+
     const findBoard = BOARDS.find((board) => board.id === boardId);
     if(findBoard){
         await removeSeccessTasksBoardId(boardId)
