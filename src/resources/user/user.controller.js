@@ -1,20 +1,10 @@
-const { randomUUID } = require('crypto')
+const { randomUUID } = require('crypto');
+const { removeSeccessTasks} = require('../tasks/tasks.controller');
 // const User = require('./user.model.js');
 // const usersService = require('./user.service');
 
 
-let USERS = [
-    {
-    id: '1',
-    name: '2',
-    password: '3'
-  }, 
-  {
-    id: '2',
-    name: '2',
-    password: '3'
-  }
-  ];
+let USERS = [];
   
 
 const getUsers = async (req, res) => {
@@ -62,6 +52,8 @@ const deleteUser = async (req, res) => {
 
     const findUser = USERS.find((user) => user.id === id);
     if(!findUser) return res.status(404).send({message: `User ${id} not found`});
+
+    await removeSeccessTasks(id);
 
     USERS = USERS.filter(user => user.id !== id);
     return res.send({message: `User ${id} has been removed`})
