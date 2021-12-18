@@ -1,0 +1,62 @@
+## USERS
+
+### GET ALL USERS
+GET http://localhost:4000/users
+
+### GET SINGLE USER
+GET http://localhost:4000/users/2
+
+### ADD USER
+POST http://localhost:4000/users
+Content-Type: application/json
+
+{
+    "name": "1234",
+    "login": "login",
+    "password": "password"
+}
+
+### UPDATE USER
+PUT http://localhost:4000/users/f2c136c9-71f9-430e-a595-8253a0522ddf
+Content-Type: application/json
+
+{
+    "name": "1234",
+    "login": "login",
+    "password": "password"
+}
+
+### DELETE USER
+DELETE  http://localhost:4000/users/1
+
+
+## BOARDS
+
+### GET ALL BOARDS
+GET http://localhost:4000/boards
+
+### GET SINGLE BOARD
+GET http://localhost:4000/boards/ea347c9a-f769-4b4d-b687-015f5f5ec771
+
+### ADD BOARD
+POST http://localhost:4000/boards
+Content-Type: application/json
+
+{
+    "columns": "1234",
+    "login": "login",
+    "password": "password"
+}
+
+### UPDATE BOARD
+PUT http://localhost:4000/boards/1
+Content-Type: application/json
+
+{
+    "name": "1234",
+    "login": "login",
+    "password": "password"
+}
+
+### DELETE BOARD
+DELETE  http://localhost:4000/boards/1
