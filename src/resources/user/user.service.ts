@@ -1,26 +1,34 @@
-const { randomUUID } = require('crypto');
-const { removeSeccessTasks} = require('../tasks/tasks.controller');
-const usersRepo = require('./user.memory.repository');
+import { randomUUID } from 'crypto';
+
+import usersRepo, { IUser } from './user.memory.repository';
+import { removeSuccessTasks } from '../tasks/tasks.router';
+
+
 
 const getAll = () => usersRepo.getAll();
-const getById =  (id) => usersRepo.getById(id);
-const create =  ({name, login}) => {
-    const user = {
+
+const getById =  (id: string) => usersRepo.getById(id);
+
+const create =  ({name, login, password}: Omit<IUser, 'id'>) => {
+    const user: IUser = {
         id: randomUUID(),
         name,
         login,
-    }
+        password
+    };
     const createUser = usersRepo.create(user);
-    return createUser
-}
-const update =  ({name, login, password}, id) => {
+    return createUser;
+};
+
+const update =  ({name, login, password}: Partial<IUser>, id: string) => {
     const updateUser = usersRepo.update({name, login, password}, id);
     return updateUser;
-}
-const remove = (id) => {
-    removeSeccessTasks(id);
+};
+
+const remove = (id: string) => {
+    removeSuccessTasks(id);
     const result = usersRepo.remove(id);
     return result
-}
+};
 
-module.exports = { getAll, getById, create, update, remove};
+export default { getAll, getById, create, update, remove};

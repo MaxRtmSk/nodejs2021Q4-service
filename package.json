@@ -48,16 +48,20 @@
     "cross-env": "7.0.3",
     "dotenv": "10.0.0",
     "fastify": "^3.24.1",
+    "fastify-plugin": "^3.0.0",
     "fastify-swagger": "^4.12.6",
     "uuid": "8.3.2",
-    "yamljs": "0.3.0"
+    "yamljs": "0.3.0",
+    "json-schema-to-ts": "^1.6.4"
   },
   "devDependencies": {
     "@types/node": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "chai": "4.3.4",
     "debug": "4.3.2",
     "dirty-chai": "2.0.1",
-    "eslint": "8.2.0",
+    "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.3",

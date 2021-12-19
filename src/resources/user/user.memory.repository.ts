@@ -1,15 +1,26 @@
-let USERS = [];
+export interface IUser {
+  name: string,
+  login: string,
+  id: string,
+  password: string
+}
 
-const getAll =  () => USERS;
-const getById =  (id) => USERS.find((user) => user.id === id);
-const create =  (user) => {
+let USERS: IUser[] = [];
+
+const getAll = (): IUser[] => USERS;
+
+const getById =  (id: string): IUser | undefined => USERS.find((user) => user.id === id);
+
+const create =  (user: IUser): IUser | undefined => {
   USERS = [...USERS, user];
-  const findUser = getById(user.id);
-  return findUser
+  return getById(user.id);
 };
-const update =  ({name, login, password}, id) => {
+
+const update =  ({name, login, password}: Partial<IUser>, id: string): IUser | null => {
   const findUser = USERS.find((user) => user.id === id);
-  
+
+  if(!findUser) return null
+
   if (name) 
       findUser.name = name;
   if (login) 
@@ -20,8 +31,8 @@ const update =  ({name, login, password}, id) => {
   return findUser;
 };
 
-const remove = (id) => {
+const remove = (id: string): void => {
   USERS = USERS.filter(user => user.id !== id);
 };
 
-module.exports = { getAll, create, getById, update, remove};
+export default { getAll, create, getById, update, remove};

@@ -1,4 +1,18 @@
-const { getTasks, getTask, addTask, deleteTask, updateTask } = require("./tasks.controller");
+import { FastifyInstance, RegisterOptions } from 'fastify';
+import { randomUUID } from 'crypto';
+
+interface ITask {
+  id: string,
+  order: string,
+  title: string,
+  description: string,
+  userId: string | null,
+  boardId: string | null,
+  columns?: []
+  columnId: string | null,
+}
+
+let TASKS: ITask[] = [];
 
 const Task = {
   type: 'object',
@@ -21,9 +35,7 @@ const getTasksOpts = {
         items: Task
       }
     }
-  },
-
-  handler: getTasks
+  }
 }
 
 const getTaskOpts = {
@@ -31,9 +43,7 @@ const getTaskOpts = {
     response: {
       200: Task
     }
-  },
-
-  handler: getTask
+  }
 }
 
 const postTaskOpts = {
@@ -53,9 +63,7 @@ const postTaskOpts = {
     response: {
       201: Task 
     }
-  },
-
-  handler: addTask
+  }
 }
 
 const updateTaskOpts = {
@@ -74,9 +82,7 @@ const updateTaskOpts = {
     response: {
       200: Task 
     }
-  },
-
-  handler: updateTask
+  }
 }
 
 const deleteTaskOpts = {
@@ -95,21 +101,92 @@ const deleteTaskOpts = {
         }
       }  
     }
-  },
-
-  handler: deleteTask
+  }
 }
 
-function TaskRoutes (fastify, options, done) {
+function TaskRoutes (fastify: FastifyInstance, options: RegisterOptions, done: () => void) {
 
-  fastify.get('/boards/:boardId/tasks', getTasksOpts);
-  fastify.get('/boards/:boardId/tasks/:taskId', getTaskOpts);
-  fastify.post('/boards/:boardId/tasks', postTaskOpts);
-  fastify.put('/boards/:boardId/tasks/:taskId', updateTaskOpts);
-  fastify.delete('/boards/:boardId/tasks/:taskId', deleteTaskOpts);
+  fastify.get<{Params: {boardId: string}}>(
+    '/boards/:boardId/tasks',
+    getTasksOpts,
+    async (req, res) => {
+    const {boardId} = req.params;
+    const result = TASKS.filter((task) => task.boardId === boardId);
+    res.send(result);
+  });
+
+  fastify.get<{Params: {boardId: string, taskId: string}}>(
+    '/boards/:boardId/tasks/:taskId',
+    getTaskOpts,
+    async (req, res) => {
+    const {taskId, boardId} = req.params;
+    const findTask = TASKS.find((task) => task.id === taskId && task.boardId === boardId);
+    if(!findTask) res.status(404).send({message: `Board ${taskId} not found`});
+    if(findTask) res.send(findTask);
+  });
+
+  fastify.post<{Body:{title: string, columnId: string, userId: string, description: string, order: string},Params: {boardId: string}}>(
+    '/boards/:boardId/tasks',
+    postTaskOpts,
+    async (req, res) => {
+    const {boardId} = req.params;
+    const {title, columnId, userId, description, order} = req.body;
+    const task: ITask = {
+      id: randomUUID(),
+      title,
+      order,
+      userId,
+      description,
+      columnId,
+      boardId
+    };
+
+    TASKS = [...TASKS, task]
+
+    res.code(201).send(task);
+  });
+
+  fastify.put<{Params: {taskId: string}, Body: {title: string, columns: []}}>('/boards/:boardId/tasks/:taskId', updateTaskOpts, async (req, res) => {
+    const {taskId} = req.params;
+    const {title, columns} = req.body;
+
+    const findTasks = TASKS.find((task) => task.id === taskId);
+    if(!findTasks) return res.status(404).send({message: `Tasks ${taskId} not found`});
+
+    if (title)
+      findTasks.title = title;
+    if (columns)
+      findTasks.columns = columns;
+
+    return res.send(findTasks)
+  });
+
+  fastify.delete<{Params: {taskId: string}}>(
+    '/boards/:boardId/tasks/:taskId',
+    deleteTaskOpts,
+    async (req, res) => {
+    const {taskId} = req.params;
+
+    const findTasks = TASKS.find((task) => task.id === taskId);
+    if(!findTasks) return res.status(404).send({message: `Tasks ${taskId} not found`});
+
+    TASKS = TASKS.filter(task => task.id !== taskId);
+
+    return res.send({message: `Tasks ${taskId} has been removed`})
+  });
 
   done()
 }
 
+export const removeSuccessTasks = async (userId: string) => {
+  TASKS = TASKS.map(task => task.userId === userId ? {...task, userId: null} : task);
+};
 
-module.exports = TaskRoutes;
+export const removeSuccessTasksBoardId = async (boardId: string) => {
+  TASKS = TASKS.map((task) =>
+    task.boardId === boardId ? { ...task, userId: null, boardId: null } : task
+  );
+};
+
+
+export default TaskRoutes;
