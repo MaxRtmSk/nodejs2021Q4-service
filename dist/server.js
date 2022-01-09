@@ -7,7 +7,7 @@ const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./common/config"));
 const start = async () => {
     try {
-        await app_1.default.listen(config_1.default.PORT);
+        await app_1.default.listen(config_1.default.PORT, '0.0.0.0');
     }
     catch (err) {
         app_1.default.log.error(err);

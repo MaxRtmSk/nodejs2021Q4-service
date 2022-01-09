@@ -2,9 +2,9 @@ FROM node:16-alpine
 
 WORKDIR /usr/src/app
 
-COPY package*.jscn ./
+COPY package*.json ./
 
-RUN npm run install 
+RUN npm install 
 
 COPY . .
 
