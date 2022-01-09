@@ -23,4 +23,4 @@ const update = async (id, updateUser) => {
 //   return true
 // };
 
-module.exports = { getAll, create, getById, update };
+export { getAll, create, getById, update };

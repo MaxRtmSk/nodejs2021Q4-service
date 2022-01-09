@@ -73,4 +73,4 @@ const removeSeccessTasksBoardId = async (boardId) => {
     );
 };
 
-module.exports = {getTasks, getTask, addTask, updateTask, deleteTask, removeSeccessTasksBoardId, removeSeccessTasks};
+export {getTasks, getTask, addTask, updateTask, deleteTask, removeSeccessTasksBoardId, removeSeccessTasks};

@@ -111,4 +111,4 @@ function BoardRoutes (fastify, options, done) {
 }
 
 
-module.exports = BoardRoutes;
+export default BoardRoutes;

@@ -24,4 +24,4 @@ const remove = (id) => {
   USERS = USERS.filter(user => user.id !== id);
 };
 
-module.exports = { getAll, create, getById, update, remove};
+export { getAll, create, getById, update, remove};

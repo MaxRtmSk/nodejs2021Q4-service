@@ -23,4 +23,4 @@ const remove = (id) => {
     return result
 }
 
-module.exports = { getAll, getById, create, update, remove};
+export { getAll, getById, create, update, remove};

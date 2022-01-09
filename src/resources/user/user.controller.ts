@@ -40,4 +40,4 @@ const deleteUser = async (req, res) => {
     return res.send({message: `User ${id} has been removed`})
 };
 
-module.exports = {getUser, getUsers, addUser, updateUser, deleteUser};
+export {getUser, getUsers, addUser, updateUser, deleteUser};

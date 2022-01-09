@@ -112,4 +112,4 @@ function TaskRoutes (fastify, options, done) {
 }
 
 
-module.exports = TaskRoutes;
+export default TaskRoutes;

@@ -102,4 +102,4 @@ function UserRoutes (fastify, options, done) {
 }
 
 
-module.exports = UserRoutes;
+export default UserRoutes;
