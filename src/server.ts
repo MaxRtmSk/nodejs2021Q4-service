@@ -1,9 +1,9 @@
-const server = require('./app');
-const { PORT } = require('./common/config');
+import server from './app';
+import config from './common/config';
 
 const start = async () => {
   try {
-    await server.listen(PORT);
+    await server.listen(config.PORT);
   } catch (err) {
     server.log.error(err);
     process.exit(1);
