@@ -27,7 +27,10 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
-## R
+## Running application
+
+1. npm run build
+2. docker-compose up --build
 
 ## Testing
 
