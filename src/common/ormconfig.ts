@@ -9,7 +9,7 @@ export default {
   type: 'postgres',
 //   url: 'postgres://postgres:postgres@backend:5432/postgres',
   port: ~~config.POSTGRES_PORT,
-  host: '0.0.0.0' || 'localhost',
+  host: config.POSTGRES_HOST || 'localhost',
   username: config.POSTGRES_USER || 'postgres',
   password: config.POSTGRES_PASSWORD || 'postgres',
   database: config.POSTGRES_DB || 'postgres',

@@ -20,12 +20,6 @@ const startHttpServer = async () => {
   }
 };
 
-// host: "0.0.0.0",
-// port: 5432,
-// username: "postgres",
-// password: "postgres",
-// database: 'postgres',
-
 createConnection(ormconfig).then(async connection => {
   await startHttpServer();
 

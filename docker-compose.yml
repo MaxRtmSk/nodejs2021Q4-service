@@ -6,6 +6,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - postgres
     networks:
       - backend
     restart: always
@@ -13,6 +15,7 @@ services:
       - ${PORT}:${PORT}
     environment:
       PORT: ${PORT}
+      POSTGRES_HOST: postgres
 
   postgres:
     container_name: postgres
