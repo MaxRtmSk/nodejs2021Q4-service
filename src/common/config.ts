@@ -5,12 +5,26 @@ dotenv.config({
   path: path.join(__dirname, '../../.env')
 });
 
+const {
+  PORT,
+  NODE_ENV,
+  JWT_SECRET_KEY,
+  POSTGRES_USER,
+  POSTGRES_PORT,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_HOST,
+} = process.env;
+
 const config = {
-  PORT: process.env.PORT ?? 3000,
-  NODE_ENV: process.env.NODE_ENV,
-  MONGO_CONNECTION_STRING: process.env.MONGO_CONNECTION_STRING,
-  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
-  AUTH_MODE: process.env.AUTH_MODE === 'true'
+  PORT: PORT ?? 3000,
+  NODE_ENV: NODE_ENV,
+  JWT_SECRET_KEY: JWT_SECRET_KEY,
+  POSTGRES_USER,
+  POSTGRES_PORT,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_HOST,
 }
 
 export default config;
