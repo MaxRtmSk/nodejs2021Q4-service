@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD ["node", "./dist/server.js" ]
+CMD ["npm", "run", "start:prod"]

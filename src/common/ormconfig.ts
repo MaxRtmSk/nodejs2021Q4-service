@@ -17,10 +17,10 @@ export default {
   migrationsRun: true,
   dropSchema: true,
   logging: true,
-  entities: [path.join(__dirname, `/**/*.entity.${isCompiled ? 'js' : 'ts'}`)],
-  migrations: [path.join(__dirname, `./src/migration/*.${isCompiled ? 'js' : 'ts'}`)],
+  entities: [path.join(__dirname, `../resources/**/*.entity.${isCompiled ? 'js' : 'ts'}`)],
+  migrations: [path.join(__dirname, `../migration/*.${isCompiled ? 'js' : 'ts'}`)],
   cli: {
-    entitiesDir: 'src/entities',
+    entitiesDir: path.join(__dirname, `/resources`),
     migrationsDir: 'src/migration',
     subscribersDir: 'src/subscriber',
   },

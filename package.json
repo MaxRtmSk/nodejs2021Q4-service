@@ -9,8 +9,11 @@
   "description": "REST service starter for RS School",
   "main": "src/server.js",
   "scripts": {
+    "start:prod": "npm run build && npm run migration:run && npm run start",
     "start": "node --experimental-modules --es-module-specifier-resolution=node dist/server.js",
     "build": "tsc -p tsconfig.json",
+    "migration:run": "typeorm migration:run --config dist/common/ormconfig.js",
+    "migration:generate": "typeorm migration:generate -n PostRefactoring1 --config dist/common/ormconfig.js",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
