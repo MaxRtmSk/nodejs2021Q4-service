@@ -11,13 +11,13 @@ POST http://localhost:4000/users
 Content-Type: application/json
 
 {
-    "name": "1234",
-    "login": "login",
+    "name": "12345",
+    "login": "login1",
     "password": "password"
 }
 
 ### UPDATE USER
-PUT http://localhost:4000/users/f2c136c9-71f9-430e-a595-8253a0522ddf
+PUT http://localhost:4000/users/0085aa92-a5ca-4424-a8f1-3ad57d583235
 Content-Type: application/json
 
 {

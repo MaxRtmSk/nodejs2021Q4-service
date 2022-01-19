@@ -9,7 +9,7 @@
   "description": "REST service starter for RS School",
   "main": "src/server.js",
   "scripts": {
-    "start:prod": "npm run build && npm run migration:run && npm run start",
+    "start:prod": "npm run build && npm run start",
     "start": "node --experimental-modules --es-module-specifier-resolution=node dist/server.js",
     "build": "tsc -p tsconfig.json",
     "migration:run": "typeorm migration:run --config dist/common/ormconfig.js",

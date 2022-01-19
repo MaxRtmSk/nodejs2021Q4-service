@@ -13,8 +13,8 @@ const getUser = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-    const {name, login} = req.body;
-    const result = usersService.create({name, login});
+    const {name, login, password} = req.body;
+    const result = usersService.create({name, login, password});
     res.code(201).send(result);
 };
 

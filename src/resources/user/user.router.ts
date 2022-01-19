@@ -39,7 +39,7 @@ const postUserOpts = {
         require: ["password", "login", "name"],
         properties: {
           name: {type: 'string'},
-          pasword: {type: 'string'},
+          password: {type: 'string'},
           login: {type: 'string'},
         }
     },
@@ -57,7 +57,7 @@ const updateUserOpts = {
       type: 'object',
       properties: {
         name: {type: 'string'},
-        pasword: {type: 'string'},
+        password: {type: 'string'},
         login: {type: 'string'},
       }
     },
