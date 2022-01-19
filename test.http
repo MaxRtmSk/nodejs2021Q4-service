@@ -4,7 +4,7 @@
 GET http://localhost:4000/users
 
 ### GET SINGLE USER
-GET http://localhost:4000/users/2
+GET http://localhost:4000/users/0085aa92-a5ca-4424-a8f1-3ad57d583235
 
 ### ADD USER
 POST http://localhost:4000/users

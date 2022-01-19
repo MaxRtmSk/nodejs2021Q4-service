@@ -1,61 +1,47 @@
 const { randomUUID } = require('crypto');
 const { removeSeccessTasksBoardId } = require('../tasks/tasks.controller');
-// const Board = require('./board.model.js');
-// const boardsService = require('./board.service');
+const boardsService = require('./board.service');
 
-
-let BOARDS = [];
   
 
 const getBoards = async (req, res) => {
-    res.send(BOARDS);
+    const boards = await boardsService.getAll();
+    res.send(boards);
 };
 
 const getBoard = async (req, res) => {
     const {boardId} = req.params;
-    const findBoard = BOARDS.find((board) => board.id === boardId);
-    if(!findBoard) res.status(404).send({message: `Board ${boardId} not found`});
-    if(findBoard) res.send(findBoard);
+    const board = await boardsService.getById(boardId);
+    if(!board) res.status(404).send({message: `Board ${boardId} not found`});
+    if(board) res.send(board);
 };
 
 const addBoard = async (req, res) => {
     const {title, columns} = req.body;
-    const board = {
-        id: randomUUID(),
-        title,
-        columns,
-    };
-
-    BOARDS = [...BOARDS, board]
-
-    res.code(201).send(board);
+    const result = await boardsService.create({title, columns});
+    res.code(201).send(result);
 };
 
 const updateBoard = async (req, res) => {
     const {boardId} = req.params;
     const {title, columns} = req.body;
 
-    const findBoard = BOARDS.find((board) => board.id === boardId);
+    const findBoard = await boardsService.getById(boardId);
     if(!findBoard) return res.status(404).send({message: `Board ${boardId} not found`});
 
-    if (title) 
-        findBoard.title = title;
-    if (columns) 
-        findBoard.login = columns; 
-
-    return res.send(findBoard)
+    const result = await boardsService.update({title, columns}, boardId)
+    return res.send(result)
 };
 
 const deleteBoard = async (req, res) => {
     const {boardId} = req.params;
 
-    const findBoard = BOARDS.find((board) => board.id === boardId);
-    if(findBoard){
-        await removeSeccessTasksBoardId(boardId)
-        BOARDS = BOARDS.filter(board => board.id !== boardId);
-        res.send({message: `Board ${boardId} has been removed`})
-    }
-    if(!findBoard) res.status(404).send({message: `Board ${boardId} not found`});
+    const findBoard = await boardsService.getById(boardId);
+    if(!findBoard) return res.status(404).send({message: `Board ${boardId} not found`});
+    
+    boardsService.remove(boardId)
+    
+    return res.send({message: `Board ${boardId} has been removed`})
 };
 
 module.exports = {getBoard, getBoards, addBoard, updateBoard, deleteBoard};
