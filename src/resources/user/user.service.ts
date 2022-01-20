@@ -1,7 +1,5 @@
 import { getRepository } from 'typeorm';
 import { User } from './user.entity';
-const { randomUUID } = require('crypto');
-const { removeSeccessTasks} = require('../tasks/tasks.controller');
 
 const getAll = async() => {
     const UserRepository = await getRepository(User);
@@ -33,7 +31,6 @@ const update =  async({name, login, password}, id) => {
 const remove = async(id) => {
     const UserRepository = getRepository(User);
     const deletRes = await UserRepository.delete({ id });
-    removeSeccessTasks(id);
     return deletRes
 }
 

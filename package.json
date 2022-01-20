@@ -10,7 +10,7 @@
   "main": "src/server.js",
   "scripts": {
     "start:prod": "npm run build && npm run start",
-    "start": "node --experimental-modules --es-module-specifier-resolution=node dist/server.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node --inspect dist/server.js",
     "build": "tsc -p tsconfig.json",
     "migration:run": "typeorm migration:run --config dist/common/ormconfig.js",
     "migration:generate": "typeorm migration:generate -n PostRefactoring1 --config dist/common/ormconfig.js",

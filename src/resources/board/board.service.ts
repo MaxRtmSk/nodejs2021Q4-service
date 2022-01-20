@@ -1,7 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Board } from './board.entity';
-const { randomUUID } = require('crypto');
-const { removeSeccessTasks} = require('../tasks/tasks.controller');
+// const { removeSeccessTasks} = require('../tasks/tasks.controller');
 
 const getAll = async() => {
     const BoardRepository = await getRepository(Board);
@@ -11,7 +10,6 @@ const getAll = async() => {
 const getById = async(id) => {
     const BoardRepository = getRepository(Board);
     const FindBoard = await BoardRepository.findOne(id);
-    console.log('BOARD111111111111111', FindBoard)
     return FindBoard;
 };
 const create = async({title, columns}) => {

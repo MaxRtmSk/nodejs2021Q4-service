@@ -29,7 +29,7 @@ const updateBoard = async (req, res) => {
     const findBoard = await boardsService.getById(boardId);
     if(!findBoard) return res.status(404).send({message: `Board ${boardId} not found`});
 
-    const result = await boardsService.update({title, columns}, boardId)
+    const result = await boardsService.update({title, ...(columns && {columns})}, boardId)
     return res.send(result)
 };
 
@@ -39,7 +39,7 @@ const deleteBoard = async (req, res) => {
     const findBoard = await boardsService.getById(boardId);
     if(!findBoard) return res.status(404).send({message: `Board ${boardId} not found`});
     
-    boardsService.remove(boardId)
+    await boardsService.remove(boardId)
     
     return res.send({message: `Board ${boardId} has been removed`})
 };
