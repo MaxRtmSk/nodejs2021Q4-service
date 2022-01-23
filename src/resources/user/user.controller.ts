@@ -1,6 +1,6 @@
-const usersService = require('./user.service');
+import usersService from './user.service';
 
-const getUsers = async (req, res) => {
+const getUsers = async (_, res) => {
     const users = usersService.getAll();
     res.send(users);
 };
@@ -13,8 +13,8 @@ const getUser = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-    const {name, login, password} = req.body;
-    const result = await usersService.create({name, login, password});
+    const {name, login} = req.body;
+    const result = await usersService.create({name, login});
     res.code(201).send(result);
 };
 
@@ -35,7 +35,7 @@ const deleteUser = async (req, res) => {
     const findUser = await usersService.getById(id);
     if(!findUser) return res.status(404).send({message: `User ${id} not found`});
 
-    usersService.remove(id);
+    await usersService.remove(id);
 
     return res.send({message: `User ${id} has been removed`})
 };

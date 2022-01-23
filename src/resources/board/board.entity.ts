@@ -9,5 +9,5 @@ export class Board {
     title!: string;
   
     @TypeormColumn('json')
-    columns: {}[] | null = [];
+    columns: [] | null = [];
 }

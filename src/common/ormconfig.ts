@@ -8,7 +8,7 @@ const isCompiled = path.extname(__filename).includes('js');
 export default {
   type: 'postgres',
 //   url: 'postgres://postgres:postgres@backend:5432/postgres',
-  port: ~~config.POSTGRES_PORT,
+  port: +config.POSTGRES_PORT,
   host: config.POSTGRES_HOST || 'localhost',
   username: config.POSTGRES_USER || 'postgres',
   password: config.POSTGRES_PASSWORD || 'postgres',

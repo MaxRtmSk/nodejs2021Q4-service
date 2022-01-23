@@ -1,8 +1,7 @@
 import fastify from 'fastify';
-
-const userRoute = require('./resources/user/user.router');
-const boardRoute = require('./resources/board/board.router');
-const tasksRoute = require('./resources/tasks/tasks.router');
+import { UserRoutes } from './resources/user/user.router';
+import boardRoute from './resources/board/board.router';
+import tasksRoute from './resources/tasks/tasks.router';
 
 
 const server = fastify({ logger: true });
@@ -14,7 +13,8 @@ server.register(require('fastify-swagger'), {
     info: {title: 'REST API'}
   }
 });
-server.register(userRoute);
+
+server.register(UserRoutes);
 server.register(boardRoute);
 server.register(tasksRoute);
 

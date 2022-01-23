@@ -1,4 +1,4 @@
-const { getBoards, getBoard, addBoard, deleteBoard, updateBoard } = require("./board.controller");
+import { getBoards, getBoard, addBoard, deleteBoard, updateBoard } from "./board.controller";
 
 const Column = {
   type: "object",

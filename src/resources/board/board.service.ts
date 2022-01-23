@@ -1,6 +1,5 @@
 import { getRepository } from 'typeorm';
 import { Board } from './board.entity';
-// const { removeSeccessTasks} = require('../tasks/tasks.controller');
 
 const getAll = async() => {
     const BoardRepository = await getRepository(Board);
@@ -8,8 +7,7 @@ const getAll = async() => {
     return boards
 };
 const getById = async(id) => {
-    const BoardRepository = getRepository(Board);
-    const FindBoard = await BoardRepository.findOne(id);
+    const FindBoard = await getRepository(Board).findOne(id);
     return FindBoard;
 };
 const create = async({title, columns}) => {
@@ -17,23 +15,21 @@ const create = async({title, columns}) => {
         title,
         columns
     }
-    const BoardRepository = getRepository(Board);
-    const newBoard = BoardRepository.create(board);
-    const saveBoard = BoardRepository.save(newBoard);
+    const BoardRepository = await getRepository(Board);
+    const newBoard = await BoardRepository.create(board);
+    const saveBoard =  await BoardRepository.save(newBoard);
     return saveBoard
 }
 const update =  async({title, columns}, id) => {
-    const BoardRepository = getRepository(Board);
-    const FindBoardRes = await getById(id);
-    const UpdateRes = await BoardRepository.update(FindBoardRes, {title, columns});
+    const BoardRepository =  await getRepository(Board);
+    const UpdateRes = await BoardRepository.update({id}, {title, ...(columns && {columns})});
     return UpdateRes.raw;
 }
 const remove = async(id) => {
-    const BoardRepository = getRepository(Board);
-    await removeSeccessTasksBoardId(id)
+    const BoardRepository = await getRepository(Board);
     const deletRes = await BoardRepository.delete({ id });
     return deletRes
 }
 
-export { getAll, getById, create, update, remove};
+export default { getAll, getById, create, update, remove};
 

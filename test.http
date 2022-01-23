@@ -49,12 +49,11 @@ Content-Type: application/json
 }
 
 ### UPDATE BOARD
-PUT http://localhost:4000/boards/4ebe4ee5-bc17-4a26-bf97-b9781c6fe6a6
+PUT http://localhost:4000/boards/62778dde-4abb-4cbb-a885-d70dc057ed97
 Content-Type: application/json
 
 {
-    "title": "login",
-    "password": "[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]"
+    "title": "login"
 }
 
 ### DELETE BOARD

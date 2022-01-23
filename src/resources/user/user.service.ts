@@ -11,7 +11,7 @@ const getById = async(id) => {
     const FindUser = await UserRepository.findOne(id);
     return FindUser;
 };
-const create = async({name, login, password}) => {
+const create = async({name, login}) => {
     const user = {
         name,
         login,
@@ -34,4 +34,4 @@ const remove = async(id) => {
     return deletRes
 }
 
-export { getAll, getById, create, update, remove};
+export default { getAll, getById, create, update, remove};

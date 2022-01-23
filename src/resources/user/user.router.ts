@@ -1,4 +1,4 @@
-const { getUsers, getUser, addUser, deleteUser, updateUser } = require("./user.controller");
+import { getUsers, getUser, addUser, deleteUser, updateUser } from "./user.controller";
 
 const User = {
   type: 'object',
@@ -90,7 +90,7 @@ const deleteUserOpts = {
   handler: deleteUser
 }
 
-function UserRoutes (fastify, options, done) {
+export function UserRoutes (fastify, _, done) {
 
   fastify.get('/users', getUsersOpts);
   fastify.get('/users/:id', getUserOpts);
@@ -100,6 +100,3 @@ function UserRoutes (fastify, options, done) {
 
   done()
 }
-
-
-export default UserRoutes;

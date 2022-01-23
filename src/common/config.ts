@@ -1,5 +1,5 @@
-const dotenv = require('dotenv');
-const path = require('path');
+import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config({
   path: path.join(__dirname, '../../.env')
@@ -18,8 +18,8 @@ const {
 
 const config = {
   PORT: PORT ?? 3000,
-  NODE_ENV: NODE_ENV,
-  JWT_SECRET_KEY: JWT_SECRET_KEY,
+  NODE_ENV,
+  JWT_SECRET_KEY,
   POSTGRES_USER,
   POSTGRES_PORT,
   POSTGRES_PASSWORD,

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn,  Column, ManyToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn,  Column, ManyToOne} from "typeorm";
 import {User} from "../user/user.entity";
 import { Board } from "../board/board.entity";
 
@@ -11,13 +11,21 @@ export class Tasks {
     title!: string;
   
     @Column('json')
-    columns: {}[] = [];
+    columns: [] = [];
 
     @Column()
-    order: 'number'
+    order: number
 
     @Column()
     description: 'string'
+
+    
+    @Column({
+        type: 'varchar',
+        nullable: true,
+        default: null,
+    })
+    columnId: "null" | "string"
 
     @ManyToOne(() => User, user => user.id, {
         nullable: true,
@@ -33,7 +41,4 @@ export class Tasks {
         onDelete: 'CASCADE',
     })
     board: string | null;
-
-    @Column()
-    columnId: "null"
 }

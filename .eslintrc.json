@@ -6,32 +6,56 @@
     "jest": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint/eslint-plugin",
+    "eslint-plugin-tsdoc"
+  ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2021,
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": ".",
     "ecmaFeatures": {
       "impliedStrict": true
     }
   },
   "settings": {
-    "noInlineConfig": true
+    "noInlineConfig": true,
+    "node": {
+      "tryExtensions": [".js", ".ts", ".d.ts"],
+      "moduleDirectory": ["node_modules", "src/"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".d.ts"],
+        "moduleDirectory": ["node_modules", "src/"],
+        "typescript": {}
+      },
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "."
+      }
+    }
   },
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:node/recommended",
     "airbnb-base",
-    "prettier"
+    "prettier",
+    "plugin:import/typescript"
   ],
   "rules": {
+    "@typescript-eslint/no-var-requires": 0,
+    "node/no-missing-import": "off",
+    "node/no-missing-require": "off",
+    "import/no-unresolved": [0],
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
-    "node/no-extraneous-require": ["error", {
-      "allowModules": [],
-      "resolvePaths": [],
-      "tryExtensions": []
-  }]
+    "dot-notation": "off",
+    "tsdoc/syntax": "warn"
   }
 }

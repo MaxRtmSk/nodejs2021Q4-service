@@ -1,4 +1,4 @@
-const { getTasks, getTask, addTask, deleteTask, updateTask } = require("./tasks.controller");
+import { getTasks, getTask, addTask, deleteTask, updateTask } from "./tasks.controller";
 
 const Task = {
   type: 'object',
