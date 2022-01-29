@@ -1,9 +1,11 @@
+import bcrypt from 'bcrypt';
 import { getRepository } from 'typeorm';
 import { User } from './user.entity';
 
+
 const getAll = async() => {
-    const UserRepository = await getRepository(User);
-    const users = await UserRepository.find();
+    const users = await getRepository(User).find();
+    console.log('uuuuuuu', users)
     return users
 };
 const getById = async(id) => {
@@ -11,12 +13,17 @@ const getById = async(id) => {
     const FindUser = await UserRepository.findOne(id);
     return FindUser;
 };
-const create = async({name, login}) => {
+const getByLogin = async(login) => {
+    const FindUserResult = await getRepository(User).findOne({where: {login}});
+    return FindUserResult;
+}
+const create = async({name, login, password}) => {
+    const hashPassword = await bcrypt.hash(password, 6);
     const user = {
         name,
         login,
-        password: '1'
-    }
+        password: hashPassword
+    };
     const UserRepository = getRepository(User);
     const newUser = UserRepository.create(user);
     const saveUser = UserRepository.save(newUser);
@@ -34,4 +41,4 @@ const remove = async(id) => {
     return deletRes
 }
 
-export default { getAll, getById, create, update, remove};
+export default { getAll, getById, getByLogin, create, update, remove};

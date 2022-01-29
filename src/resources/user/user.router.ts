@@ -18,7 +18,6 @@ const getUsersOpts = {
       }
     }
   },
-
   handler: getUsers
 }
 
@@ -92,11 +91,26 @@ const deleteUserOpts = {
 
 export function UserRoutes (fastify, _, done) {
 
-  fastify.get('/users', getUsersOpts);
-  fastify.get('/users/:id', getUserOpts);
-  fastify.post('/users', postUserOpts);
-  fastify.put('/users/:id', updateUserOpts);
-  fastify.delete('/users/:id', deleteUserOpts);
+  fastify.get('/users', {
+    preHandler: fastify.auth([fastify.verifyToken]),
+    ...getUsersOpts,
+  });
+  fastify.get('/users/:id', {
+    preHandler: fastify.auth([fastify.verifyToken]),
+    ...getUserOpts
+  });
+  fastify.post('/users', {
+    preHandler: fastify.auth([fastify.verifyToken]), 
+    ...postUserOpts
+  });
+  fastify.put('/users/:id', {
+    preHandler: fastify.auth([fastify.verifyToken]),
+    ...updateUserOpts
+  });
+  fastify.delete('/users/:id', {
+    preHandler: fastify.auth([fastify.verifyToken]), 
+    ...deleteUserOpts
+  });
 
-  done()
+  done();
 }

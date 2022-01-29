@@ -100,13 +100,13 @@ const deleteTaskOpts = {
   handler: deleteTask
 }
 
-function TaskRoutes (fastify, options, done) {
+function TaskRoutes (fastify, _, done) {
 
-  fastify.get('/boards/:boardId/tasks', getTasksOpts);
-  fastify.get('/boards/:boardId/tasks/:taskId', getTaskOpts);
-  fastify.post('/boards/:boardId/tasks', postTaskOpts);
-  fastify.put('/boards/:boardId/tasks/:taskId', updateTaskOpts);
-  fastify.delete('/boards/:boardId/tasks/:taskId', deleteTaskOpts);
+  fastify.get('/boards/:boardId/tasks', {preHandler: fastify.auth([fastify.verifyToken]),...getTasksOpts});
+  fastify.get('/boards/:boardId/tasks/:taskId', {preHandler: fastify.auth([fastify.verifyToken]),...getTaskOpts});
+  fastify.post('/boards/:boardId/tasks', {preHandler: fastify.auth([fastify.verifyToken]),...postTaskOpts});
+  fastify.put('/boards/:boardId/tasks/:taskId', {preHandler: fastify.auth([fastify.verifyToken]),...updateTaskOpts});
+  fastify.delete('/boards/:boardId/tasks/:taskId', {preHandler: fastify.auth([fastify.verifyToken]),...deleteTaskOpts});
 
   done()
 }

@@ -99,13 +99,13 @@ const deleteBoardOpts = {
   handler: deleteBoard
 }
 
-function BoardRoutes (fastify, options, done) {
+function BoardRoutes (fastify, _, done) {
 
-  fastify.get('/boards', getBoardsOpts);
-  fastify.get('/boards/:boardId', getBoardOpts);
-  fastify.post('/boards', postBoardOpts);
-  fastify.put('/boards/:boardId', updateBoardOpts);
-  fastify.delete('/boards/:boardId', deleteBoardOpts);
+  fastify.get('/boards', {preHandler: fastify.auth([fastify.verifyToken]),...getBoardsOpts});
+  fastify.get('/boards/:boardId', {preHandler: fastify.auth([fastify.verifyToken]),...getBoardOpts});
+  fastify.post('/boards', {preHandler: fastify.auth([fastify.verifyToken]),...postBoardOpts});
+  fastify.put('/boards/:boardId', {preHandler: fastify.auth([fastify.verifyToken]),...updateBoardOpts});
+  fastify.delete('/boards/:boardId', {preHandler: fastify.auth([fastify.verifyToken]),...deleteBoardOpts});
 
   done()
 }
